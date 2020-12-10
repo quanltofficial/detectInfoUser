@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript | Detecting the Operating System & Browser Info of User.</title>
+  </head>
+
+  <body style="text-align: center" id="body">
+    <h3 style="color: rgb(228, 121, 0)">github.com/quanltsimple</h3>
+    <p id="GFG_UP" style="font-size: 19px; font-weight: bold"></p>
+    <button class="button" onclick="GFG_Fun()"><span>Click Here </span></button>
+    <p
+      id="GFG_DOWN"
+      style="color: green; font-size: 22px; font-weight: bold"
+    ></p>
+    <script>
+      HTMLDocument.prototype.e = document.getElementById;
+      var el_up = document.e("GFG_UP");
+      var el_down = document.e("GFG_DOWN");
+      el_up.innerHTML = "Click on the button to get the OS & Browser info of User's System.";
+      var NameOS = "Not known";
+      if (navigator.appVersion.indexOf("Win") != -1) NameOS = "Windows OS";
+      if (navigator.appVersion.indexOf("Mac") != -1) NameOS = "MacOS";
+      if (navigator.appVersion.indexOf("X11") != -1) NameOS = "UNIX OS";
+      if (navigator.appVersion.indexOf("Linux") != -1) NameOS = "Linux OS";
+      // Full Info
+      var nVer = navigator.appVersion;
+      var nAgt = navigator.userAgent;
+      var browserName = navigator.appName;
+      var fullVersion = "" + parseFloat(navigator.appVersion);
+      var majorVersion = parseInt(navigator.appVersion, 10);
+      var nameOffset, verOffset, ix;
+
+      // In Opera, the true version is after "Opera" or after "Version"
+      if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+        browserName = "Opera";
+        fullVersion = nAgt.substring(verOffset + 6);
+        if ((verOffset = nAgt.indexOf("Version")) != -1)
+          fullVersion = nAgt.substring(verOffset + 8);
+      }
+      // In MSIE, the true version is after "MSIE" in userAgent
+      else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+        browserName = "Microsoft Internet Explorer";
+        fullVersion = nAgt.substring(verOffset + 5);
+      }
+      // In Chrome, the true version is after "Chrome"
+      else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+        browserName = "Chrome";
+        fullVersion = nAgt.substring(verOffset + 7);
+      }
+      // In Safari, the true version is after "Safari" or after "Version"
+      else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+        browserName = "Safari";
+        fullVersion = nAgt.substring(verOffset + 7);
+        if ((verOffset = nAgt.indexOf("Version")) != -1)
+          fullVersion = nAgt.substring(verOffset + 8);
+      }
+      // In Firefox, the true version is after "Firefox"
+      else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+        browserName = "Firefox";
+        fullVersion = nAgt.substring(verOffset + 8);
+      }
+      // In most other browsers, "name/version" is at the end of userAgent
+      else if (
+        (nameOffset = nAgt.lastIndexOf(" ") + 1) <
+        (verOffset = nAgt.lastIndexOf("/"))
+      ) {
+        browserName = nAgt.substring(nameOffset, verOffset);
+        fullVersion = nAgt.substring(verOffset + 1);
+        if (browserName.toLowerCase() == browserName.toUpperCase()) {
+          browserName = navigator.appName;
+        }
+      }
+      // trim the fullVersion string at semicolon/space if present
+      if ((ix = fullVersion.indexOf(";")) != -1)
+        fullVersion = fullVersion.substring(0, ix);
+      if ((ix = fullVersion.indexOf(" ")) != -1)
+        fullVersion = fullVersion.substring(0, ix);
+
+      majorVersion = parseInt("" + fullVersion, 10);
+      if (isNaN(majorVersion)) {
+        fullVersion = "" + parseFloat(navigator.appVersion);
+        majorVersion = parseInt(navigator.appVersion, 10);
+      }
+
+      function GFG_Fun() {
+        el_down.innerHTML =
+          "" +
+          "OS  = " +
+          NameOS +
+          "<br>" +
+          "Browser name  = " +
+          browserName +
+          "<br>" +
+          "Full version  = " +
+          fullVersion +
+          "<br>" +
+          "Major version = " +
+          majorVersion +
+          "<br>" +
+          "navigator.appName = " +
+          navigator.appName +
+          "<br>" +
+          "navigator.userAgent = " +
+          navigator.userAgent +
+          "<br>";
+      }
+    </script>
+  </body>
+  <style>
+    .button {
+      border-radius: 4px;
+      background-color: #f4511e;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 22px;
+      padding: 10px;
+      width: 200px;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    
+    .button span {
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    
+    .button span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -20px;
+      transition: 0.5s;
+    }
+    
+    .button:hover span {
+      padding-right: 25px;
+    }
+    
+    .button:hover span:after {
+      opacity: 1;
+      right: 0;
+    }
+    </style>
+</html>
